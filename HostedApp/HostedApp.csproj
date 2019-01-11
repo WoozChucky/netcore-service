@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyEngine\MyEngine.csproj" />
+    <ProjectReference Include="..\MyTransportLayer.Http\MyTransportLayer.Http.csproj" />
     <ProjectReference Include="..\MyTransportLayer\MyTransportLayer.csproj" />
   </ItemGroup>
 

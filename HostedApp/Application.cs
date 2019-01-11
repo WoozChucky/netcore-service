@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyEngine;
 using MyTransportLayer;
+using MyTransportLayer.Http;
 
 namespace HostedApp
 {
