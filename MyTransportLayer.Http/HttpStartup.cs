@@ -48,12 +48,12 @@ namespace MyTransportLayer.Http
             app.Use(async (context, next) =>
             {
                 var headers = new Dictionary<string, string>();
-                foreach (var header in context.Request.Headers)
+                foreach (var (key, value) in context.Request.Headers)
                 {
-                    headers.Add(header.Key, header.Value);
+                    headers.Add(key, value);
                 }
 
-                Request(this, new RequestMessageEventArgs
+                Request?.Invoke(this, new RequestMessageEventArgs
                 {
                     CorrelationId = Guid.NewGuid(),
                     Request = new RequestMessage

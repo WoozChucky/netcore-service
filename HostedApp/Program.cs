@@ -36,7 +36,7 @@ namespace HostedApp
         private static void CurrentDomainOnProcessExit(object sender, EventArgs e)
         {
             Console.WriteLine("ProcessExit occurred.");
-            Application.GracefullyShutdown();
+            //Application.GracefullyShutdown();
         }
     }
 }

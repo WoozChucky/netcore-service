@@ -16,14 +16,18 @@ namespace HostedApp
     internal sealed class Application
     {
         private IHost _host;
-        private readonly IHostBuilder _builder;
+        private IHostBuilder _builder;
 
         private bool _isRunning;
         private readonly object _shutdownLock = new object();
 
         public Application()
         {
-            _builder = new HostBuilder()
+        }
+
+        public async Task Start(string[] args)
+        {
+            _builder = Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddScoped<IEngine, Engine>();
@@ -33,15 +37,14 @@ namespace HostedApp
                     services.AddHostedService<MyService>();
                 })
                 .UseContentRoot(Directory.GetCurrentDirectory());
-        }
-
-        public async Task Start(string[] args)
-        {
+            
             var isService = !(Debugger.IsAttached || ((IList)args).Contains("--console"));
 
-            if (isService && OS.IsWindows())
+            if (isService)
             {
                 Console.WriteLine("Running as service...");
+                //_builder.UseSystemd();
+                //_builder.UseWindowsService();
                 _host = _builder.BuildAsService();
             }
             else
@@ -69,6 +72,9 @@ namespace HostedApp
 
                 // Stop the service
                 service.StopAsync().Wait();
+
+                // Stop the host
+                _host.StopAsync().Wait();
             }
         }
     }

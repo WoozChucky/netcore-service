@@ -30,7 +30,7 @@ namespace MyTransportLayer.Http
             if (!IsRunning) return;
             // Here we need a func to write to the context.Response
             // HttpStartup.Request needs to pass it probably.
-            OnRequestReceived(this, e);
+            OnRequestReceived?.Invoke(this, e);
         }
 
         public override async void Start()
